@@ -32,6 +32,7 @@ class Resister extends React.Component {
     // ページリロード
     document.location.reload();
   }
+
   handleShow = async () => this.setState({ show: true });
 
   componentDidMount = async () => {
@@ -91,7 +92,7 @@ class Resister extends React.Component {
               noValidate validated={this.state.validated} >
 
               <Form.Group controlId="validationCustom03">
-                <Form.Label>Your Name</Form.Label>
+                <Form.Label>UserName</Form.Label>
                 <Form.Control
                   type="name"
                   onChange={this.handleChange("name")}

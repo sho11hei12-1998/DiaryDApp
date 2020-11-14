@@ -1,7 +1,6 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 
-// import Main from "./Main";
 import Submit from "./Submit";
 import Resister from "./Resister";
 import Info from "./Info";
@@ -64,12 +63,11 @@ class Header extends React.Component {
           <hr />
 
           <Switch>
-            {/* <Route exact path="/home" component={Main} /> */}
             <Route path="/submit" component={Submit} />
             <Route path="/resister" component={Resister} />
             <Route path="/info" component={Info} />
             <Route path="/geteth" component={GetEth} />
-            <Route path="/mypage" component={Mypage} />
+            <Route exact path="/mypage" component={Mypage} />
           </Switch>
 
         </HashRouter>

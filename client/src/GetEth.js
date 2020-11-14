@@ -2,7 +2,7 @@ import React from "react";
 import MarketApp from "./DiaryApp.json";
 import getWeb3 from "./getWeb3";
 
-import { Row, Col, Button } from "react-bootstrap"; // 
+import { Row, Col, Button, Modal } from "react-bootstrap"; // 
 import "bootstrap/dist/css/bootstrap.min.css"; // 
 
 class GetEth extends React.Component {
@@ -18,6 +18,11 @@ class GetEth extends React.Component {
       entry_condition1: 0,
       entry_condition2: false,
       message: null,
+
+      // モーダル
+      show: false,
+      message1: "",
+      message2: "",
     };
   }
 
@@ -69,6 +74,15 @@ class GetEth extends React.Component {
     }
   };
 
+  // モーダル設定
+  handleClose = async () => {
+    await this.setState({ show: false });
+
+    // ページリロード
+    document.location.reload();
+  }
+  handleShow = async () => this.setState({ show: true });
+
   // エントリーをするための関数
   entry_button = async () => {
     const { contract, accounts, entry_condition1 } = this.state;
@@ -81,15 +95,16 @@ class GetEth extends React.Component {
       console.log(result);
 
       if (result.status === true) {
-        alert("エントリーが完了しました");
+        this.setState({ message1: "Entry completed" });
+        this.setState({ message2: "エントリーが完了しました" });
+        this.handleShow();
       }
     }
     else {
-      alert('エントリー条件が満たされていません。')
+      this.setState({ message1: "Not Entry completed" });
+      this.setState({ message2: "エントリー条件が満たされていません" });
+      this.handleShow();
     }
-
-    // トランザクション完了後、ページリロード
-    document.location.reload()
   };
 
   // 当選者を決める関数
@@ -122,7 +137,7 @@ class GetEth extends React.Component {
             </div>
 
             <h3>＜エントリー条件＞</h3>
-            <p>・取引回数が1回以上</p>
+            <p>・投稿回数が1回以上</p>
 
             <div>
               <Button variant="primary" type="submit" size="lg"
@@ -141,6 +156,19 @@ class GetEth extends React.Component {
               disabled={this.state.total_price_status}>
               当選者を発表
             </Button>
+
+            {/* モーダル */}
+            <Modal show={this.state.show} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>{this.state.message1}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>{this.state.message2}</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Close
+            </Button>
+              </Modal.Footer>
+            </Modal>
 
 
           </Col>

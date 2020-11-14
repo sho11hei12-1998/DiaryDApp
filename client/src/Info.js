@@ -79,7 +79,7 @@ class Info extends React.Component {
             <br />
             <br />
 
-            {this.state.outputName ? <p>Name: {this.state.outputName}</p> : <p></p>}
+            {this.state.outputName ? <p>UserName: {this.state.outputName}</p> : <p></p>}
             {/* {this.state.outputEmail ? (
               <p>Email: {this.state.outputEmail}</p>
             ) : (

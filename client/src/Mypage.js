@@ -3,7 +3,7 @@ import MarketApp from "./DiaryApp.json";
 import getWeb3 from "./getWeb3";
 import SimpleItemCard from "./SimpleItemCard";
 
-import { Row, Col, CardDeck, Tabs, Tab } from "react-bootstrap"; // 
+import { Row, Col, CardDeck, Tabs, Tab, Modal, Button } from "react-bootstrap"; // 
 import "bootstrap/dist/css/bootstrap.min.css"; // 
 
 class Mypage extends React.Component {
@@ -21,6 +21,11 @@ class Mypage extends React.Component {
       outputName: null,
       outputEmail: null,
       outputNumWrite: 0,
+
+      // モーダル
+      show: false,
+      message1: '',
+      message2: '',
     };
   }
 
@@ -73,8 +78,48 @@ class Mypage extends React.Component {
     console.log(this.state.lines);
   };
 
+  // モーダル設定
+  handleClose = async () => {
+    await this.setState({ show: false });
+
+    // ページリロード
+    document.location.reload();
+  }
+  handleShow = async () => this.setState({ show: true });
+
+
+  // お気に入り登録
+  favo_true = async (idx) => {
+    const { accounts, contract } = this.state;
+    const result = await contract.methods.favo_true(idx).send({
+      from: accounts[0],
+    });
+    console.log(result);
+
+    if (result.status === true) {
+      this.setState({ message1: 'Registered as a favorite' });
+      this.setState({ message2: 'お気に入り登録しました' });
+      this.handleShow();
+    }
+  };
+
+  // お気に入り解除
+  favo_false = async (idx) => {
+    const { accounts, contract } = this.state;
+    const result = await contract.methods.favo_false(idx).send({
+      from: accounts[0],
+    });
+    console.log(result);
+
+    if (result.status === true) {
+      this.setState({ message1: 'Canceled as a favorite' });
+      this.setState({ message2: 'お気に入りを解除しました' });
+      this.handleShow();
+    }
+  };
+
   render() {
-    // 出品した商品を表示させる
+    // 投稿した日記を表示させる
     const card1 = this.state.lines.map((block, i) => {
 
       if (this.state.lines[i].item[0] === this.state.accounts[0]) {
@@ -87,6 +132,8 @@ class Mypage extends React.Component {
             title={this.state.lines[i].item[1]}
             text={this.state.lines[i].item[2]}
             time={this.state.lines[i].item[3]}
+            favo_c={'★'}
+            favo_button={() => this.favo_true(i)}
           />
         );
       }
@@ -95,18 +142,21 @@ class Mypage extends React.Component {
       }
     });
 
-    // 購入した商品を表示させる
+    // お気に入り登録した日記を表示させる
     const card2 = this.state.lines.map((block, i) => {
 
-      if (this.state.lines[i].item[1] === this.state.accounts[0]) {
+      if (this.state.lines[i].item[4] === true) {
         return (
           <SimpleItemCard
             {...block}
             key={i}
             num={Number(i)}
             image={this.state.lines[i].image}
-            title={this.state.lines[i].item[3]}
-            text={this.state.lines[i].item[4]}
+            title={this.state.lines[i].item[1]}
+            text={this.state.lines[i].item[2]}
+            time={this.state.lines[i].item[3]}
+            favo_c={'お気に入り解除'}
+            favo_button={() => this.favo_false(i)}
           />
         );
       }
@@ -119,7 +169,7 @@ class Mypage extends React.Component {
       <div id="Mypage" className="mx-4">
         <Row>
           <Col md={{ span: 4, offset: 4 }} xs={{ span: 12 }}>
-            <p>Name: {this.state.outputName}</p>
+            <p>UserName: {this.state.outputName}</p>
             <p>Address: {this.state.accounts}</p>
             <p>投稿数: {this.state.outputNumWrite}</p>
           </Col>
@@ -149,6 +199,19 @@ class Mypage extends React.Component {
             </Tabs>
           </Col>
         </Row>
+
+        {/* モーダル */}
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.state.message1}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.message2}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
