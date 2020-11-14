@@ -93,6 +93,7 @@ contract DiaryApp {
         string title; // 日記のタイトル
         string text; // 日記の本文
         uint256 time; //投稿時刻
+        bool favorite; // お気に入り
         bool stopSell; // false:出品中, true:出品取消し
     }
     mapping(uint256 => item) public items;
@@ -120,6 +121,16 @@ contract DiaryApp {
         bonus_eth += msg.value;
         accounts[msg.sender].numWrite++; // 各アカウントが投稿した記事数の更新
         numItems++; // 出品されている商品数を１つ増やす
+    }
+
+    // お気に入り登録
+    function favo_true(uint256 _num) public onlyUser isStopped {
+        items[_num].favorite = true;
+    }
+
+    // お気に入り解除
+    function favo_false(uint256 _num) public onlyUser isStopped {
+        items[_num].favorite = false;
     }
 
     // ================
@@ -165,7 +176,7 @@ contract DiaryApp {
 
     // 当選者の選定とethの送金処理
     function get_eth() public payable onlyOwner isStopped {
-        require(bonus_eth >= 5 ether);
+        require(bonus_eth >= 1 ether);
 
         uint256 idx = random();
         get_eth_accounts[idx].entryAddr.transfer(bonus_eth);
