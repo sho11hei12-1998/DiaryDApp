@@ -150,7 +150,7 @@ contract DiaryApp {
     function entry_get_eth() public onlyUser isStopped {
         // 応募条件
         require(!accounts[msg.sender].entryed);
-        require(accounts[msg.sender].numWrite >= 1); // 投稿回数が1以上
+        require(accounts[msg.sender].numWrite >= 1); // 投稿回数が1回以上
 
         get_eth_accounts[total_entry].entryAddr = msg.sender; //
         get_eth_accounts[total_entry].name = accounts[msg.sender].name; //
@@ -176,7 +176,8 @@ contract DiaryApp {
 
     // 当選者の選定とethの送金処理
     function get_eth() public payable onlyOwner isStopped {
-        require(bonus_eth >= 1 ether);
+        require(bonus_eth >= 5 ether);
+        require(total_entry > 0);
 
         uint256 idx = random();
         get_eth_accounts[idx].entryAddr.transfer(bonus_eth);

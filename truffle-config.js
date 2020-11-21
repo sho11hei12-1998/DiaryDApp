@@ -1,6 +1,6 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
 var mnemonic =
-  "must large hand rival client liquid camera impose scale play frequent pass";
+  "metamaskのニーモック";
 var accessToken =
   "https://rinkeby.infura.io/v3/95236c9d1efb4b32bbafca2e307c2041";
 const gas = 4000000;
