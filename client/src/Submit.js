@@ -102,6 +102,18 @@ class Submit extends React.Component {
               noValidate validated={this.state.validated} >
 
               <Form.Group controlId="validationCustom03">
+                <Form.Label>Googleドライブにアップロードした画像のファイルIDを入力して下さい。</Form.Label>
+                <Form.Control
+                  onChange={this.handleChange("googleDocID")}
+                  placeholder="File ID"
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter fileID.
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="validationCustom03">
                 <Form.Label>タイトルを入力して下さい。</Form.Label>
                 <Form.Control
                   onChange={this.handleChange("title")}
@@ -119,22 +131,10 @@ class Submit extends React.Component {
                   as="textarea"
                   onChange={this.handleChange("text")}
                   placeholder="Text"
-                  rows={3}
+                  rows={5}
                   required />
                 <Form.Control.Feedback type="invalid">
                   Please enter Text.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group controlId="validationCustom03">
-                <Form.Label>Googleドライブにアップロードした画像のファイルIDを入力して下さい。</Form.Label>
-                <Form.Control
-                  onChange={this.handleChange("googleDocID")}
-                  placeholder="File ID"
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter fileID.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -157,7 +157,7 @@ class Submit extends React.Component {
 
               {/* 出品するコントラクトを呼び出すボタンを配置する */}
               <Button variant="primary" onClick={this.submitItem} type="submit" className="btn btn-default">
-                出品
+                投稿
           </Button>
 
 

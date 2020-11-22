@@ -92,7 +92,7 @@ class Resister extends React.Component {
               noValidate validated={this.state.validated} >
 
               <Form.Group controlId="validationCustom03">
-                <Form.Label>UserName</Form.Label>
+                <Form.Label>User Name</Form.Label>
                 <Form.Control
                   type="name"
                   onChange={this.handleChange("name")}

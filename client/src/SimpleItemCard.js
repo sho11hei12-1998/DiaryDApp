@@ -29,15 +29,15 @@ class SimpleItemCard extends React.Component {
   render() {
     return (
       <div id="simple_card_item">
-        <Card style={{ width: '18rem', height: '23rem' }}>
+        <Card style={{ width: '18rem', height: 'auto' }}>
           <Card.Img
             variant="top"
             src={"http://drive.google.com/uc?export=view&id=" + this.props.image}
           />
 
           <Card.Body>
-            <Card.Title>タイトル：{this.props.title}</Card.Title>
-            <Card.Text>本文：{this.props.text}</Card.Text>
+            <Card.Title>{this.props.title}</Card.Title>
+            <Card.Text>{this.props.text}</Card.Text>
 
             <Row className="justify-content-center">
               <Button
@@ -50,7 +50,9 @@ class SimpleItemCard extends React.Component {
           </Card.Body>
 
           <Card.Footer className="text-center">
-            <small className="text-muted">{this.unixTimeToTime(this.props.time)}</small>
+            <small className="text-muted mr-5">{this.unixTimeToTime(this.props.time)}</small>
+
+            <Button variant="outline-primary" size="sm" onClick={this.props.stop_button}>×</Button>
           </Card.Footer>
 
         </Card>

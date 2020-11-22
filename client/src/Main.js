@@ -11,7 +11,7 @@ import { Nav } from "react-bootstrap"; //
 import "bootstrap/dist/css/bootstrap.min.css"; // 
 import { LinkContainer } from 'react-router-bootstrap';
 
-class Header extends React.Component {
+class Main extends React.Component {
   page_transition() {
     document.location.reload()
   }
@@ -76,4 +76,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default Main;

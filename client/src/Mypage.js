@@ -118,11 +118,26 @@ class Mypage extends React.Component {
     }
   };
 
+  // 投稿を非表示にする
+  stop_item = async (idx) => {
+    const { accounts, contract } = this.state;
+    const result = await contract.methods.stop_item(idx).send({
+      from: accounts[0],
+    });
+    console.log(result);
+
+    if (result.status === true) {
+      this.setState({ message1: 'Hid the post' });
+      this.setState({ message2: '投稿を非表示にしました' });
+      this.handleShow();
+    }
+  };
+
   render() {
     // 投稿した日記を表示させる
     const card1 = this.state.lines.map((block, i) => {
 
-      if (this.state.lines[i].item[0] === this.state.accounts[0]) {
+      if (this.state.lines[i].item[5] === false && this.state.lines[i].item[0] === this.state.accounts[0]) {
         return (
           <SimpleItemCard
             {...block}
@@ -134,6 +149,7 @@ class Mypage extends React.Component {
             time={this.state.lines[i].item[3]}
             favo_c={'★'}
             favo_button={() => this.favo_true(i)}
+            stop_button={() => this.stop_item(i)}
           />
         );
       }
@@ -145,7 +161,7 @@ class Mypage extends React.Component {
     // お気に入り登録した日記を表示させる
     const card2 = this.state.lines.map((block, i) => {
 
-      if (this.state.lines[i].item[4] === true) {
+      if (this.state.lines[i].item[5] === false && this.state.lines[i].item[4] === true) {
         return (
           <SimpleItemCard
             {...block}
@@ -169,7 +185,7 @@ class Mypage extends React.Component {
       <div id="Mypage" className="mx-4">
         <Row>
           <Col md={{ span: 4, offset: 4 }} xs={{ span: 12 }}>
-            <p>UserName: {this.state.outputName}</p>
+            <p>User Name: {this.state.outputName}</p>
             <p>Address: {this.state.accounts}</p>
             <p>投稿数: {this.state.outputNumWrite}</p>
           </Col>
