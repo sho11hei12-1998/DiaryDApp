@@ -1,5 +1,5 @@
 import React from "react";
-import MarketApp from "./DiaryApp.json";
+import DiaryApp from "./DiaryApp.json";
 import getWeb3 from "./getWeb3";
 
 import { Row, Col, Button, Modal } from "react-bootstrap"; // 
@@ -32,9 +32,9 @@ class GetEth extends React.Component {
 
       const accounts = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = MarketApp.networks[networkId];
+      const deployedNetwork = DiaryApp.networks[networkId];
       const instance = new web3.eth.Contract(
-        MarketApp.abi,
+        DiaryApp.abi,
         deployedNetwork && deployedNetwork.address
       );
 

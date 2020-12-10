@@ -1,8 +1,6 @@
 import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap"; // 
+import { Card, Button, Row } from "react-bootstrap"; // 
 import "bootstrap/dist/css/bootstrap.min.css"; // 
-
-
 class SimpleItemCard extends React.Component {
 
   constructor(props) {
@@ -50,9 +48,9 @@ class SimpleItemCard extends React.Component {
           </Card.Body>
 
           <Card.Footer className="text-center">
-            <small className="text-muted mr-5">{this.unixTimeToTime(this.props.time)}</small>
+            <small className="text-muted">{this.unixTimeToTime(this.props.time)}</small>
 
-            <Button variant="outline-primary" size="sm" onClick={this.props.stop_button}>×</Button>
+            <Button className="position-absolute ml-5" variant="primary" size="sm" onClick={this.props.stop_button}>×</Button>
           </Card.Footer>
 
         </Card>

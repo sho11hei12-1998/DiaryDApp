@@ -1,5 +1,5 @@
 import React from "react";
-import MarketApp from "./DiaryApp.json";
+import DiaryApp from "./DiaryApp.json";
 import getWeb3 from "./getWeb3";
 import SimpleItemCard from "./SimpleItemCard";
 
@@ -35,9 +35,9 @@ class Mypage extends React.Component {
 
       const accounts = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = MarketApp.networks[networkId];
+      const deployedNetwork = DiaryApp.networks[networkId];
       const instance = new web3.eth.Contract(
-        MarketApp.abi,
+        DiaryApp.abi,
         deployedNetwork && deployedNetwork.address
       );
 
@@ -201,13 +201,13 @@ class Mypage extends React.Component {
               className="justify-content-center">
 
               <Tab eventKey="card1" title="投稿">
-                <CardDeck className="justify-content-center mt-4">
+                <CardDeck className="justify-content-center my-4">
                   {/* カード代入 */}
                   {card1}
                 </CardDeck>
               </Tab>
               <Tab eventKey="card2" title="お気に入り">
-                <CardDeck className="justify-content-center mt-4">
+                <CardDeck className="justify-content-center my-4">
                   {/* カード代入 */}
                   {card2}
                 </CardDeck>

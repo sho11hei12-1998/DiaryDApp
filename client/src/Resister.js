@@ -1,13 +1,11 @@
 import React from "react";
-import MarketApp from "./DiaryApp.json";
+import DiaryApp from "./DiaryApp.json";
 import getWeb3 from "./getWeb3";
 
 import { Row, Col, Button, Form, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class Resister extends React.Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -41,9 +39,9 @@ class Resister extends React.Component {
 
       const accounts = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = MarketApp.networks[networkId];
+      const deployedNetwork = DiaryApp.networks[networkId];
       const instance = new web3.eth.Contract(
-        MarketApp.abi,
+        DiaryApp.abi,
         deployedNetwork && deployedNetwork.address
       );
 
@@ -128,7 +126,7 @@ class Resister extends React.Component {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" onClick={this.writeRecord}>
+              <Button variant="primary" type="button" onClick={this.writeRecord}>
                 会員登録
           </Button>
 
